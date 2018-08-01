@@ -242,6 +242,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KayttajatController.cs" />
+    <Compile Include="Controllers\MVCRavintolaKommentitController.cs" />
     <Compile Include="Controllers\MVCRavintolatController.cs" />
     <Compile Include="Controllers\RavintolaKommentitController.cs" />
     <Compile Include="Controllers\RavintolatController.cs" />
@@ -369,6 +370,11 @@
     <Content Include="Views\MVCRavintolat\Details.cshtml" />
     <Content Include="Views\MVCRavintolat\Edit.cshtml" />
     <Content Include="Views\MVCRavintolat\Index.cshtml" />
+    <Content Include="Views\MVCRavintolaKommentit\Create.cshtml" />
+    <Content Include="Views\MVCRavintolaKommentit\Delete.cshtml" />
+    <Content Include="Views\MVCRavintolaKommentit\Details.cshtml" />
+    <Content Include="Views\MVCRavintolaKommentit\Edit.cshtml" />
+    <Content Include="Views\MVCRavintolaKommentit\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
