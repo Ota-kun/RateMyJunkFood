@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3b3d69ed0ad8464195c74e90fb55a04c" Name="Diagram1">
+        <EntityTypeShape EntityType="RMJFDBModel.Kayttajat" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RMJFDBModel.RavintolaKommentit" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RMJFDBModel.Ravintolat" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RMJFDBModel.Ruoka" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RMJFDBModel.RuokaKommentit" Width="1.5" PointX="7.5" PointY="4.875" IsExpanded="true" />
+        <AssociationConnector Association="RMJFDBModel.FK_Ravintolat_Kayttajat" ManuallyRouted="false" />
+        <AssociationConnector Association="RMJFDBModel.FK_RavintolaKommentit_Ravintolat" ManuallyRouted="false" />
+        <AssociationConnector Association="RMJFDBModel.FK_Ruoka_Ravintolat" ManuallyRouted="false" />
+        <AssociationConnector Association="RMJFDBModel.FK_RuokaKommentit_Ruoka" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

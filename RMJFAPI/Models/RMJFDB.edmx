@@ -1,0 +1,380 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RMJFDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Kayttajat">
+          <Key>
+            <PropertyRef Name="kayttajaId" />
+          </Key>
+          <Property Name="kayttajaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nimimerkki" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="salasana" Type="nvarchar" MaxLength="50" />
+          <Property Name="kayttajanViestit" Type="int" />
+          <Property Name="kuva" Type="image" />
+        </EntityType>
+        <EntityType Name="RavintolaKommentit">
+          <Key>
+            <PropertyRef Name="ravKommenttiID" />
+          </Key>
+          <Property Name="ravKommenttiID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ravintolaId" Type="int" Nullable="false" />
+          <Property Name="kayttajaId" Type="int" Nullable="false" />
+          <Property Name="kommentti" Type="nvarchar(max)" />
+          <Property Name="kuva" Type="image" />
+          <Property Name="kanniRate" Type="int" />
+          <Property Name="darraRate" Type="int" />
+        </EntityType>
+        <EntityType Name="Ravintolat">
+          <Key>
+            <PropertyRef Name="ravintolaId" />
+          </Key>
+          <Property Name="ravintolaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ravintolanNimi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="kayttajaId" Type="int" Nullable="false" />
+          <Property Name="osoite" Type="nvarchar" MaxLength="75" Nullable="false" />
+          <Property Name="ravintolaAvaa" Type="time" Precision="0" />
+          <Property Name="ravintolaSulkee" Type="time" Precision="0" />
+          <Property Name="ratingDarra" Type="int" />
+          <Property Name="ratingKanni" Type="int" />
+          <Property Name="myyjat" Type="int" />
+          <Property Name="kuva" Type="image" />
+          <Property Name="alkoholi" Type="binary" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Ruoka">
+          <Key>
+            <PropertyRef Name="ruokaId" />
+          </Key>
+          <Property Name="ruokaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ravintolaId" Type="int" Nullable="false" />
+          <Property Name="kuva" Type="image" />
+          <Property Name="nimi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="darraIndeksi" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="kanniIndeksi" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="kayttajaId" Type="int" Nullable="false" />
+          <Property Name="hinta" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="RuokaKommentit">
+          <Key>
+            <PropertyRef Name="ruoKommenttiId" />
+          </Key>
+          <Property Name="ruoKommenttiId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kayttajaId" Type="int" Nullable="false" />
+          <Property Name="ruokaId" Type="int" Nullable="false" />
+          <Property Name="kommentti" Type="nvarchar(max)" />
+          <Property Name="kuva" Type="image" />
+        </EntityType>
+        <Association Name="FK_RavintolaKommentit_Ravintolat">
+          <End Role="Ravintolat" Type="Self.Ravintolat" Multiplicity="1" />
+          <End Role="RavintolaKommentit" Type="Self.RavintolaKommentit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ravintolat">
+              <PropertyRef Name="ravintolaId" />
+            </Principal>
+            <Dependent Role="RavintolaKommentit">
+              <PropertyRef Name="ravintolaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ravintolat_Kayttajat">
+          <End Role="Kayttajat" Type="Self.Kayttajat" Multiplicity="1" />
+          <End Role="Ravintolat" Type="Self.Ravintolat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kayttajat">
+              <PropertyRef Name="kayttajaId" />
+            </Principal>
+            <Dependent Role="Ravintolat">
+              <PropertyRef Name="kayttajaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ruoka_Ravintolat">
+          <End Role="Ravintolat" Type="Self.Ravintolat" Multiplicity="1" />
+          <End Role="Ruoka" Type="Self.Ruoka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ravintolat">
+              <PropertyRef Name="ravintolaId" />
+            </Principal>
+            <Dependent Role="Ruoka">
+              <PropertyRef Name="ravintolaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RuokaKommentit_Ruoka">
+          <End Role="Ruoka" Type="Self.Ruoka" Multiplicity="1" />
+          <End Role="RuokaKommentit" Type="Self.RuokaKommentit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ruoka">
+              <PropertyRef Name="ruokaId" />
+            </Principal>
+            <Dependent Role="RuokaKommentit">
+              <PropertyRef Name="ruokaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RMJFDBModelStoreContainer">
+          <EntitySet Name="Kayttajat" EntityType="Self.Kayttajat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RavintolaKommentit" EntityType="Self.RavintolaKommentit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ravintolat" EntityType="Self.Ravintolat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ruoka" EntityType="Self.Ruoka" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RuokaKommentit" EntityType="Self.RuokaKommentit" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_RavintolaKommentit_Ravintolat" Association="Self.FK_RavintolaKommentit_Ravintolat">
+            <End Role="Ravintolat" EntitySet="Ravintolat" />
+            <End Role="RavintolaKommentit" EntitySet="RavintolaKommentit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ravintolat_Kayttajat" Association="Self.FK_Ravintolat_Kayttajat">
+            <End Role="Kayttajat" EntitySet="Kayttajat" />
+            <End Role="Ravintolat" EntitySet="Ravintolat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ruoka_Ravintolat" Association="Self.FK_Ruoka_Ravintolat">
+            <End Role="Ravintolat" EntitySet="Ravintolat" />
+            <End Role="Ruoka" EntitySet="Ruoka" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RuokaKommentit_Ruoka" Association="Self.FK_RuokaKommentit_Ruoka">
+            <End Role="Ruoka" EntitySet="Ruoka" />
+            <End Role="RuokaKommentit" EntitySet="RuokaKommentit" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RMJFDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Kayttajat">
+          <Key>
+            <PropertyRef Name="kayttajaId" />
+          </Key>
+          <Property Name="kayttajaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nimimerkki" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="salasana" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kayttajanViestit" Type="Int32" />
+          <Property Name="kuva" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Ravintolat" Relationship="Self.FK_Ravintolat_Kayttajat" FromRole="Kayttajat" ToRole="Ravintolat" />
+        </EntityType>
+        <EntityType Name="RavintolaKommentit">
+          <Key>
+            <PropertyRef Name="ravKommenttiID" />
+          </Key>
+          <Property Name="ravKommenttiID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ravintolaId" Type="Int32" Nullable="false" />
+          <Property Name="kayttajaId" Type="Int32" Nullable="false" />
+          <Property Name="kommentti" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="kuva" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="kanniRate" Type="Int32" />
+          <Property Name="darraRate" Type="Int32" />
+          <NavigationProperty Name="Ravintolat" Relationship="Self.FK_RavintolaKommentit_Ravintolat" FromRole="RavintolaKommentit" ToRole="Ravintolat" />
+        </EntityType>
+        <EntityType Name="Ravintolat">
+          <Key>
+            <PropertyRef Name="ravintolaId" />
+          </Key>
+          <Property Name="ravintolaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ravintolanNimi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="kayttajaId" Type="Int32" Nullable="false" />
+          <Property Name="osoite" Type="String" MaxLength="75" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ravintolaAvaa" Type="Time" Precision="0" />
+          <Property Name="ravintolaSulkee" Type="Time" Precision="0" />
+          <Property Name="ratingDarra" Type="Int32" />
+          <Property Name="ratingKanni" Type="Int32" />
+          <Property Name="myyjat" Type="Int32" />
+          <Property Name="kuva" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="alkoholi" Type="Binary" MaxLength="50" FixedLength="true" />
+          <NavigationProperty Name="Kayttajat" Relationship="Self.FK_Ravintolat_Kayttajat" FromRole="Ravintolat" ToRole="Kayttajat" />
+          <NavigationProperty Name="RavintolaKommentit" Relationship="Self.FK_RavintolaKommentit_Ravintolat" FromRole="Ravintolat" ToRole="RavintolaKommentit" />
+          <NavigationProperty Name="Ruoka" Relationship="Self.FK_Ruoka_Ravintolat" FromRole="Ravintolat" ToRole="Ruoka" />
+        </EntityType>
+        <EntityType Name="Ruoka">
+          <Key>
+            <PropertyRef Name="ruokaId" />
+          </Key>
+          <Property Name="ruokaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ravintolaId" Type="Int32" Nullable="false" />
+          <Property Name="kuva" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="nimi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="darraIndeksi" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="kanniIndeksi" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="kayttajaId" Type="Int32" Nullable="false" />
+          <Property Name="hinta" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Ravintolat" Relationship="Self.FK_Ruoka_Ravintolat" FromRole="Ruoka" ToRole="Ravintolat" />
+          <NavigationProperty Name="RuokaKommentit" Relationship="Self.FK_RuokaKommentit_Ruoka" FromRole="Ruoka" ToRole="RuokaKommentit" />
+        </EntityType>
+        <EntityType Name="RuokaKommentit">
+          <Key>
+            <PropertyRef Name="ruoKommenttiId" />
+          </Key>
+          <Property Name="ruoKommenttiId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kayttajaId" Type="Int32" Nullable="false" />
+          <Property Name="ruokaId" Type="Int32" Nullable="false" />
+          <Property Name="kommentti" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="kuva" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Ruoka" Relationship="Self.FK_RuokaKommentit_Ruoka" FromRole="RuokaKommentit" ToRole="Ruoka" />
+        </EntityType>
+        <Association Name="FK_Ravintolat_Kayttajat">
+          <End Role="Kayttajat" Type="Self.Kayttajat" Multiplicity="1" />
+          <End Role="Ravintolat" Type="Self.Ravintolat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kayttajat">
+              <PropertyRef Name="kayttajaId" />
+            </Principal>
+            <Dependent Role="Ravintolat">
+              <PropertyRef Name="kayttajaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RavintolaKommentit_Ravintolat">
+          <End Role="Ravintolat" Type="Self.Ravintolat" Multiplicity="1" />
+          <End Role="RavintolaKommentit" Type="Self.RavintolaKommentit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ravintolat">
+              <PropertyRef Name="ravintolaId" />
+            </Principal>
+            <Dependent Role="RavintolaKommentit">
+              <PropertyRef Name="ravintolaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ruoka_Ravintolat">
+          <End Role="Ravintolat" Type="Self.Ravintolat" Multiplicity="1" />
+          <End Role="Ruoka" Type="Self.Ruoka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ravintolat">
+              <PropertyRef Name="ravintolaId" />
+            </Principal>
+            <Dependent Role="Ruoka">
+              <PropertyRef Name="ravintolaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RuokaKommentit_Ruoka">
+          <End Role="Ruoka" Type="Self.Ruoka" Multiplicity="1" />
+          <End Role="RuokaKommentit" Type="Self.RuokaKommentit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ruoka">
+              <PropertyRef Name="ruokaId" />
+            </Principal>
+            <Dependent Role="RuokaKommentit">
+              <PropertyRef Name="ruokaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RMJFDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Kayttajat" EntityType="Self.Kayttajat" />
+          <EntitySet Name="RavintolaKommentit" EntityType="Self.RavintolaKommentit" />
+          <EntitySet Name="Ravintolat" EntityType="Self.Ravintolat" />
+          <EntitySet Name="Ruoka" EntityType="Self.Ruoka" />
+          <EntitySet Name="RuokaKommentit" EntityType="Self.RuokaKommentit" />
+          <AssociationSet Name="FK_Ravintolat_Kayttajat" Association="Self.FK_Ravintolat_Kayttajat">
+            <End Role="Kayttajat" EntitySet="Kayttajat" />
+            <End Role="Ravintolat" EntitySet="Ravintolat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RavintolaKommentit_Ravintolat" Association="Self.FK_RavintolaKommentit_Ravintolat">
+            <End Role="Ravintolat" EntitySet="Ravintolat" />
+            <End Role="RavintolaKommentit" EntitySet="RavintolaKommentit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ruoka_Ravintolat" Association="Self.FK_Ruoka_Ravintolat">
+            <End Role="Ravintolat" EntitySet="Ravintolat" />
+            <End Role="Ruoka" EntitySet="Ruoka" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RuokaKommentit_Ruoka" Association="Self.FK_RuokaKommentit_Ruoka">
+            <End Role="Ruoka" EntitySet="Ruoka" />
+            <End Role="RuokaKommentit" EntitySet="RuokaKommentit" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RMJFDBModelStoreContainer" CdmEntityContainer="RMJFDBEntities">
+          <EntitySetMapping Name="Kayttajat">
+            <EntityTypeMapping TypeName="RMJFDBModel.Kayttajat">
+              <MappingFragment StoreEntitySet="Kayttajat">
+                <ScalarProperty Name="kayttajaId" ColumnName="kayttajaId" />
+                <ScalarProperty Name="nimimerkki" ColumnName="nimimerkki" />
+                <ScalarProperty Name="salasana" ColumnName="salasana" />
+                <ScalarProperty Name="kayttajanViestit" ColumnName="kayttajanViestit" />
+                <ScalarProperty Name="kuva" ColumnName="kuva" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RavintolaKommentit">
+            <EntityTypeMapping TypeName="RMJFDBModel.RavintolaKommentit">
+              <MappingFragment StoreEntitySet="RavintolaKommentit">
+                <ScalarProperty Name="ravKommenttiID" ColumnName="ravKommenttiID" />
+                <ScalarProperty Name="ravintolaId" ColumnName="ravintolaId" />
+                <ScalarProperty Name="kayttajaId" ColumnName="kayttajaId" />
+                <ScalarProperty Name="kommentti" ColumnName="kommentti" />
+                <ScalarProperty Name="kuva" ColumnName="kuva" />
+                <ScalarProperty Name="kanniRate" ColumnName="kanniRate" />
+                <ScalarProperty Name="darraRate" ColumnName="darraRate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ravintolat">
+            <EntityTypeMapping TypeName="RMJFDBModel.Ravintolat">
+              <MappingFragment StoreEntitySet="Ravintolat">
+                <ScalarProperty Name="ravintolaId" ColumnName="ravintolaId" />
+                <ScalarProperty Name="ravintolanNimi" ColumnName="ravintolanNimi" />
+                <ScalarProperty Name="kayttajaId" ColumnName="kayttajaId" />
+                <ScalarProperty Name="osoite" ColumnName="osoite" />
+                <ScalarProperty Name="ravintolaAvaa" ColumnName="ravintolaAvaa" />
+                <ScalarProperty Name="ravintolaSulkee" ColumnName="ravintolaSulkee" />
+                <ScalarProperty Name="ratingDarra" ColumnName="ratingDarra" />
+                <ScalarProperty Name="ratingKanni" ColumnName="ratingKanni" />
+                <ScalarProperty Name="myyjat" ColumnName="myyjat" />
+                <ScalarProperty Name="kuva" ColumnName="kuva" />
+                <ScalarProperty Name="alkoholi" ColumnName="alkoholi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ruoka">
+            <EntityTypeMapping TypeName="RMJFDBModel.Ruoka">
+              <MappingFragment StoreEntitySet="Ruoka">
+                <ScalarProperty Name="ruokaId" ColumnName="ruokaId" />
+                <ScalarProperty Name="ravintolaId" ColumnName="ravintolaId" />
+                <ScalarProperty Name="kuva" ColumnName="kuva" />
+                <ScalarProperty Name="nimi" ColumnName="nimi" />
+                <ScalarProperty Name="darraIndeksi" ColumnName="darraIndeksi" />
+                <ScalarProperty Name="kanniIndeksi" ColumnName="kanniIndeksi" />
+                <ScalarProperty Name="kayttajaId" ColumnName="kayttajaId" />
+                <ScalarProperty Name="hinta" ColumnName="hinta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RuokaKommentit">
+            <EntityTypeMapping TypeName="RMJFDBModel.RuokaKommentit">
+              <MappingFragment StoreEntitySet="RuokaKommentit">
+                <ScalarProperty Name="ruoKommenttiId" ColumnName="ruoKommenttiId" />
+                <ScalarProperty Name="kayttajaId" ColumnName="kayttajaId" />
+                <ScalarProperty Name="ruokaId" ColumnName="ruokaId" />
+                <ScalarProperty Name="kommentti" ColumnName="kommentti" />
+                <ScalarProperty Name="kuva" ColumnName="kuva" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

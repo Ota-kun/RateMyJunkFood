@@ -1,0 +1,87 @@
+﻿@model IEnumerable<RMJFAPI.Models.Ravintolat>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ravintolanNimi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.osoite)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ravintolaAvaa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ravintolaSulkee)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ratingDarra)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ratingKanni)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.myyjat)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.kuva)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.alkoholi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Kayttajat.nimimerkki)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ravintolanNimi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.osoite)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ravintolaAvaa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ravintolaSulkee)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ratingDarra)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ratingKanni)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.myyjat)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.kuva)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.alkoholi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Kayttajat.nimimerkki)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ravintolaId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ravintolaId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ravintolaId })
+        </td>
+    </tr>
+}
+
+</table>
