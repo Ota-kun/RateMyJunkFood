@@ -27,6 +27,8 @@ namespace RMJFAPI.Controllers
         [ResponseType(typeof(Kayttajat))]
         public async Task<IHttpActionResult> GetKayttajat(int id)
         {
+
+            // Turha kommentti (fork-harjoitus) -Okku
             Kayttajat kayttajat = await db.Kayttajat.FindAsync(id);
             if (kayttajat == null)
             {
